@@ -1,0 +1,82 @@
+<div class="flex flex-col flex-auto items-center sm:justify-center min-w-0 w-screen h-screen ">
+   <div class="w-full sm:w-[60%] py-8 px-4 sm:p-12 sm:rounded-2xl sm:shadow-md  ">
+    <div class="flex flex-col justify-center items-center">
+        <div class="text-4xl font-extrabold tracking-tight leading-tight ">Sign up</div>
+        <div class="flex items-baseline mt-0.5 font-medium  mb-4">
+            <div class="">Already have an account?
+            </div>
+            <a class="ml-1 text-primary-500 hover:underline " href="login">Sign in 
+            </a>
+        </div>
+    </div>
+        <div class="sm:w-full">
+            <form nz-form [formGroup]="signUpForm" (ngSubmit)="onSignUp()">
+                <nz-form-item>
+                  <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">E-mail</nz-form-label>
+                  <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
+                    <input class="rounded-lg" nz-input formControlName="email" id="email" />
+                  </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                  <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>Password</nz-form-label>
+                  <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your password!">
+                    <input
+                      class="rounded-lg"
+                      nz-input
+                      type="password"
+                      id="password"
+                      formControlName="password"
+                      (ngModelChange)="updateConfirmValidator()"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                  <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="checkPassword" nzRequired>Confirm Password</nz-form-label>
+                  <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTpl">
+                    <input class="rounded-lg" nz-input type="password" formControlName="checkPassword" id="checkPassword" />
+                    <ng-template #errorTpl let-control>
+                      @if (control.errors?.['required']) {
+                        Please confirm your password!
+                      }
+                      @if (control.errors?.['confirm']) {
+                        Two passwords that you enter is inconsistent!
+                      }
+                    </ng-template>
+                  </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                  <nz-form-label
+                    [nzSm]="6"
+                    [nzXs]="24"
+                    nzFor="nickname"
+                    nzRequired
+                    nzTooltipTitle="What do you want other to call you"
+                  >
+                    <span>Nickname</span>
+                  </nz-form-label>
+                  <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your nickname!">
+                    <input class="rounded-lg" nz-input id="nickname" formControlName="nickname" />
+                  </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                  <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phoneNumber" nzRequired>Phone Number</nz-form-label>
+                  <nz-form-control
+                    [nzSm]="14"
+                    [nzXs]="24"
+                    [nzValidateStatus]="signUpForm.controls['phoneNumber']"
+                    nzErrorTip="Please input your phone number!"
+                  >
+                      <input class="rounded-lg" formControlName="phoneNumber" id="'phoneNumber'" nz-input />
+                  </nz-form-control>
+                </nz-form-item>
+                <div *ngIf="error" class="text-red-500 sm:w-full sm:ml-[-8.4%] justify-center flex">{{ error }}</div>
+                <nz-form-item nz-row class="register-area">
+                    
+                  <nz-form-control [nzSpan]="14" [nzOffset]="6">
+                    <button nz-button nzType="primary">Register</button>
+                  </nz-form-control>
+                </nz-form-item>
+              </form>
+        </div>
+   
+</div>

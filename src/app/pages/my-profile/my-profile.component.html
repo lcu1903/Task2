@@ -1,0 +1,87 @@
+<div class="flex flex-col flex-auto items-center sm:justify-center h-full ">
+    <div class="w-full  sm:w-[60%] sm:p-12 sm:rounded-2xl sm:shadow-md  ">
+     <div class="flex flex-col justify-center items-center">
+         <div class="text-4xl font-extrabold tracking-tight leading-tight pl-12 ">Profile</div>
+     </div>
+         <div class=" w-full p-0 ">
+             <form nz-form [formGroup]="userUpdateForm" (ngSubmit)="submitUpdate()">
+                 <nz-form-item  class="mb-3">
+                   <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="email" class="p-0">E-mail: </nz-form-label>
+                   <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
+                    <input class="rounded-lg" nz-input id="email" formControlName="email" />
+                   </nz-form-control>
+                 </nz-form-item>
+                 <nz-form-item  class="mb-3">
+                   <nz-form-label
+                     [nzSm]="6"
+                     [nzXs]="24"
+                     nzFor="nickname"
+                     nzRequired
+                     nzTooltipTitle="What do you want other to call you"
+                     class="p-0"
+                   >
+                     <span>Nickname</span>
+                   </nz-form-label>
+                   <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your nickname!">
+                     <input class="rounded-lg" nz-input id="nickname" formControlName="nickname" />
+                   </nz-form-control>
+                 </nz-form-item>
+                 <nz-form-item class="mb-3">
+                    <nz-form-label
+                      class="p-0"
+                      [nzSm]="6"
+                      [nzXs]="24"
+                      nzFor="phoneNumber"
+                      nzRequired
+                      nzTooltipTitle="What do you want other to call you"
+                    >
+                      <span>Phone number</span>
+                    </nz-form-label>
+                    <nz-form-control  class="p-0" [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your phone number!">
+                      <input class="rounded-lg" nz-input id="phoneNumber" formControlName="phoneNumber" />
+                    </nz-form-control>
+                  </nz-form-item>
+                  
+                 <nz-form-item nz-row class="register-area mb-3">
+                     
+                   <nz-form-control [nzSpan]="14" [nzOffset]="6" class="w-full m-0 sm:ml-[25%]">
+                     <button nz-button nzType="primary" class="w-full">Save</button>
+                   </nz-form-control>
+
+
+                 </nz-form-item>
+                
+                  <nz-form-item class="mb-3">
+                    <nz-form-label  class="p-0" [nzSm]="6" [nzXs]="24" nzFor="password" >Old Password</nz-form-label>
+                    <nz-form-control  class="p-0" [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your password!">
+                      <input
+                        class="rounded-lg"
+                        nz-input
+                        type="password"
+                        id="password"
+                        formControlName="oldPassword"
+                        (ngModelChange)="updateConfirmValidator()"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item class="mb-3">
+                    <nz-form-label   class="p-0" [nzSm]="6" [nzXs]="24" nzFor="checkPassword" >New Password</nz-form-label>
+                    <nz-form-control  class="p-0" [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTpl">
+                      <input class="rounded-lg" nz-input type="password" formControlName="newPassword" id="newPassword" />
+                      <ng-template #errorTpl let-control>
+                        @if (control.errors?.['required']) {
+                          Please input your new password!
+                        }
+                        
+                      </ng-template>
+                    </nz-form-control>
+                  </nz-form-item>
+                
+               </form>
+               <div *ngIf="error" class="text-red-500 sm:w-full sm:ml-[-8.4%] justify-center flex">{{ error }}</div>
+               <div class="w-full justify-center flex">
+                 <button  nz-button nzType="primary" class="md:w-[58.2%] md:ml-[8.5%] w-full " (click)="onChangePassword()">Change password</button>
+               </div>
+       </div>
+    
+ </div>

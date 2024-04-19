@@ -1,0 +1,38 @@
+<div class="flex justify-center sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 w-screen h-screen">
+  <div class="flex w-full h-full justify-center items-center shadow-2xl  md:w-[40%] md:h-[90%] md:mx-[30%] md:my-[2%] ">
+    <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0 ">
+      <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Sign in</div>
+      <div class="flex items-baseline mt-0.5 font-medium ">
+        <div class="">Don't have an account?
+        </div>
+        <a class="ml-1 text-primary-500 hover:underline " href="/signup">Sign up 
+        </a>
+      </div>
+      <form nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="onLogin()">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input your Email correctly!">
+            <nz-input-group nzPrefixIcon="user">
+              <input  type="Email" nz-input formControlName="Email" placeholder="Username" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input your Password!">
+            <nz-input-group nzPrefixIcon="lock">
+              <input  type="password" nz-input formControlName="Password" placeholder="Password" autocomplete="false" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>  
+        <div nz-row class="login-form-margin">
+          <div *ngIf="error" class="text-red-500">{{ error }}</div>
+          <div nz-col [nzSpan]="10" class="ml-[-20px]">
+            <a class="login-form-forgot" href="/reset-password">Forgot password</a>
+          </div>
+        </div>
+        <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Log in</button>
+        Or
+        <a href="/signup">register now!</a>
+      </form>
+    </div>
+  </div>
+</div>

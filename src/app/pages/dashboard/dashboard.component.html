@@ -1,0 +1,57 @@
+<div class="flex flex-col text-gray-900  w-full h-full bg-gray-200 ">
+    <!-- component -->
+    <div class="flex flex-col  w-full h-full ">
+        <div class="flex px-1 pt-1 h-12"  >
+            <div class="flex text-sm  text-white md:w-[10%] h-full  items-center justify-center rounded-md px-1 ">
+                <button class="bg-blue-500 hover:bg-blue-700 border-none w-full h-full " (click)="getUsers()" >GET USERS</button>
+            </div>
+            <a href="/dashboard/user" class="flextext-sm text-white md:w-[10%] h-full  items-center justify-center rounded-md px-1">
+                <button class="bg-blue-500 hover:bg-blue-700 border-none w-full h-full" >
+                    My Profile
+                </button>
+            </a>
+        </div>
+        <div class="p-1 flex">
+            <h1 class="text-3xl">Users</h1>
+        </div>
+        <div class="flex justify-center w-full overflow-auto h-full">
+            <nz-table #basicTable [nzData]="listOfDisplayUser" class="w-full px-2 " >
+                <thead>
+                  <tr>
+                    <th nzCustomFilter>
+                      Name
+                      <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+                        <span nz-icon nzType="search" nzTheme="outline" class="w-9"></span>
+                      </nz-filter-trigger>
+                    </th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of basicTable.data">
+                    <td>{{ data.userName }}</td>
+                    <td>{{ data.email }}</td>
+                    <td>{{ data.role }}</td>
+                    <td>
+                      <a routerLink="{{data.id}}" nz-button nzType="primary">Details</a>
+                      <nz-divider nzType="vertical"></nz-divider>
+                      <a  nz-button nzType="primary" nzDanger>Delete</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </nz-table>
+              <nz-dropdown-menu #menu="nzDropdownMenu">
+                <div class="ant-table-filter-dropdown">
+                  <div class="search-box">
+                    <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
+                    <button nz-button nzSize="small" nzType="primary" (click)="search()" nz-button nzType="primary">Search</button>
+                    <button nz-button nzSize="small" (click)="reset()">Reset</button>
+                  </div>
+                </div>
+              </nz-dropdown-menu>
+        </div>
+       
+    </div>
+</div>

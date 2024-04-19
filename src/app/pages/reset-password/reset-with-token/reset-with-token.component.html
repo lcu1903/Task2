@@ -1,0 +1,42 @@
+<body class="w-full h-full bg-gray-50 flex justify-center items-center shadow-2xl">       
+    <form nz-form [formGroup]="resetPasswordWithTokenForm" class="login-form" (ngSubmit)="onResetPasswordWithToken()">
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your Token correctly!">
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Token" nzRequired>Token</nz-form-label>
+                <nz-input-group>
+                    <input class="rounded-lg"  type="text" nz-input formControlName="Token" placeholder="Token" />
+                </nz-input-group>
+            </nz-form-control>
+            </nz-form-item>
+        <nz-form-item>
+            <nz-form-control  nzErrorTip="Please input your new password!">
+            <nz-form-label nzFor="password" nzRequired>Password</nz-form-label>
+                              <input
+                                class="rounded-lg"
+                                nz-input
+                                type="password"
+                                id="password"
+                                formControlName="NewPassword"
+                                placeholder="********" 
+                                (ngModelChange)="updateConfirmValidator()"
+                              />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control [nzErrorTip]="errorTpl">
+            <nz-form-label  nzFor="ConfirmPassword" nzRequired>Confirm Password</nz-form-label>
+                    <input class="rounded-lg" nz-input type="password" formControlName="ConfirmPassword" id="ConfirmPassword" placeholder="********"  />
+                        <ng-template #errorTpl let-control>
+                                @if (control.errors?.['required']) {
+                                  Please confirm your password!
+                                }
+                                @if (control.errors?.['confirm']) {
+                                  Two passwords that you enter is inconsistent!
+                                }
+                        </ng-template>
+                    </nz-form-control>
+        </nz-form-item>
+        <div *ngIf="error" class="text-red-500">{{ error }}</div>
+        <button nz-button [nzType]="'primary'"> Reset</button>
+    </form>
+</body>
