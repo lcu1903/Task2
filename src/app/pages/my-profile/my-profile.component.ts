@@ -20,6 +20,7 @@ import { NzFormModule } from "ng-zorro-antd/form";
 import { NzInputModule } from "ng-zorro-antd/input";
 import { NzSelectModule } from "ng-zorro-antd/select";
 import { NzButtonModule } from "ng-zorro-antd/button";
+import { NzMessageService } from "ng-zorro-antd/message";
 @Component({
   selector: "app-my-profile",
   standalone: true,
@@ -61,6 +62,7 @@ export class MyProfileComponent {
     private userService: UserService,
     private router: Router,
     private fb: NonNullableFormBuilder,
+    private message: NzMessageService,
   ) {
     this.userUpdateForm = this.fb.group({
       email: ["", [Validators.required, Validators.email]],
@@ -110,6 +112,7 @@ export class MyProfileComponent {
       this.userService
         .updateMyInfo(this.user.user.id, updateObj)
         .subscribe((response: any) => {
+          this.createMessage("Successfully updated profile!");
           this.router.navigateByUrl("/user");
           this.error = "Updated sucessfully";
         });
@@ -130,7 +133,7 @@ export class MyProfileComponent {
             this.userUpdateForm.value.newPassword,
           )
           .subscribe((response: any) => {
-            this.router.navigateByUrl("/user");
+            this.createMessage("Changed Password Sucessfully!");
             this.error = "Password changed sucessfully";
           });
       }
@@ -155,6 +158,9 @@ export class MyProfileComponent {
 
   toggleChangePassword() {
     this.isChangePasswordToggle = !this.isChangePasswordToggle;
+  }
+  createMessage(type: string): void {
+    this.message.create(type, `${type}`);
   }
 }
 export type UserObj = {

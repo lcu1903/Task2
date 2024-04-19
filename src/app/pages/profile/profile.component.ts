@@ -21,6 +21,7 @@ import {
   ValidatorFn,
   Validators,
 } from "@angular/forms";
+import { NzMessageService } from "ng-zorro-antd/message";
 @Component({
   selector: "app-profile",
   standalone: true,
@@ -55,6 +56,7 @@ export class ProfileComponent {
     private route: ActivatedRoute,
     private router: Router,
     private fb: NonNullableFormBuilder,
+    private message: NzMessageService
   ) {
     this.getUser();
     this.userUpdateForm = this.fb.group({
@@ -88,6 +90,7 @@ export class ProfileComponent {
       this.userService
         .updateInfo(this.user.user.id, updateObj)
         .subscribe((response: any) => {
+          this.createMessage("success");
           this.error = response.message;
         });
     } else {
@@ -127,6 +130,10 @@ export class ProfileComponent {
 
     return !passwordValid ? { passwordStrength: true } : null;
   };
+  createMessage(type: string): void {
+    this.message.create(type, `${type}`);
+  }
+  
 }
 export type UserObj = {
   id: string;

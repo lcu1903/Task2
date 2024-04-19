@@ -8,6 +8,7 @@ import { SignupComponent } from "./pages/signup/signup.component";
 import { ResetPasswordComponent } from "./pages/reset-password/reset-password.component";
 import { WelcomeComponent } from "./pages/welcome/welcome.component";
 import { ChangePasswordComponent } from "./pages/profile/change-password/change-password.component";
+import { AddUserComponent } from "./pages/add-user/add-user.component";
 
 export const routes: Routes = [
   { path: "", pathMatch: "full", redirectTo: "/login" },
@@ -27,6 +28,11 @@ export const routes: Routes = [
         component: MyProfileComponent,
         title: "My Profile",
         pathMatch: "full",
+      },
+      {
+        path: "add-user",
+        component: AddUserComponent,
+        title: "Add User",
       },
       {
         path: ":id",

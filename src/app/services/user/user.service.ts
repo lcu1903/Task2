@@ -24,6 +24,8 @@ export class UserService {
   ForgotPasswordApiUrl = environment.forgotPasswordApiUrl;
   UpdateInformationApiUrl = environment.updateUserApiUrl;
   CheckUserOrEmailExistApiUrl = environment.checkUserOrEmailExistApiUrl;
+  AddUserApiUrl = environment.addUserApiUrl;
+  DeleteUserApiUrl = environment.deleteUserApiUrl;
   constructor(private http: HttpClient) {}
 
   ////ADMIN USER MANAGEMENT
@@ -59,6 +61,12 @@ export class UserService {
   }
   checkUserOrEmailExists(username: string, email: string): Observable<boolean> {
     return this.http.get<boolean>(this.CheckUserOrEmailExistApiUrl);
+  }
+  addUser(user: AddUserObj): Observable<AddUserObj> {
+    return this.http.post<AddUserObj>(this.AddUserApiUrl, user);
+  }
+  deleteUser(id: string): Observable<any> {
+    return this.http.delete(this.DeleteUserApiUrl(id));
   }
 
   ////USER INFORMATION
@@ -134,4 +142,11 @@ export type UpdateMyProfileObj = {
   userName: string;
   phoneNumber: string;
   password: string;
+};
+export type AddUserObj = {
+  email: string;
+  password: string;
+  username: string;
+  phoneNumber: string;
+  role: string;
 };

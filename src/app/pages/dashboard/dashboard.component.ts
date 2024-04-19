@@ -13,6 +13,7 @@ import { NzTableModule } from "ng-zorro-antd/table";
 import { NzDividerModule } from "ng-zorro-antd/divider";
 import { NzDropDownModule } from "ng-zorro-antd/dropdown";
 import { NzButtonModule } from "ng-zorro-antd/button";
+import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: "app-dashboard",
   standalone: true,
@@ -26,6 +27,7 @@ import { NzButtonModule } from "ng-zorro-antd/button";
     RouterModule,
     NzIconModule,
     NzButtonModule,
+    
   ],
   templateUrl: "./dashboard.component.html",
   styleUrl: "./dashboard.component.scss",
@@ -41,6 +43,7 @@ export class DashboardComponent {
     private router: Router,
     private http: HttpClient,
     private userService: UserService,
+    private message: NzMessageService
   ) {
     if (this.authService.checkAuthentication()) {
       if (!this.authService.isAdmin()) {
@@ -61,8 +64,16 @@ export class DashboardComponent {
           role: userWithRoles.roles[0] ? userWithRoles.roles[0][0] : "user", // Default to 'user' if no roles
         };
       });
+      this.createMessage('Successfully fetched users!');
       this.listOfDisplayUser = [...this.allUsers];
     });
+  }
+  onDeleteUser(id: string) {
+    this.userService.deleteUser(id).subscribe((response) => {
+      this.createMessage('Successfully deleted user!');
+      this.getUsers();
+    });
+
   }
 
   navigateToUserDetails(id: string) {
@@ -78,6 +89,9 @@ export class DashboardComponent {
     this.listOfDisplayUser = this.allUsers.filter(
       (item: AllUserObj) => item.userName.indexOf(this.searchValue) !== -1,
     );
+  }
+  createMessage(type: string): void {
+    this.message.create(type, `${type}`);
   }
 }
 

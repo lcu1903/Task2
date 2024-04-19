@@ -3,13 +3,18 @@
     <div class="flex flex-col  w-full h-full ">
         <div class="flex px-1 pt-1 h-12"  >
             <div class="flex text-sm  text-white md:w-[10%] h-full  items-center justify-center rounded-md px-1 ">
-                <button class="bg-blue-500 hover:bg-blue-700 border-none w-full h-full " (click)="getUsers()" >GET USERS</button>
+                <button class="bg-blue-500 hover:bg-blue-700 border-none w-full h-full " (click)="getUsers()" >Get Users</button>
             </div>
             <a href="/dashboard/user" class="flextext-sm text-white md:w-[10%] h-full  items-center justify-center rounded-md px-1">
                 <button class="bg-blue-500 hover:bg-blue-700 border-none w-full h-full" >
                     My Profile
                 </button>
             </a>
+            <a href="/dashboard/add-user" class="flextext-sm text-white md:w-[10%] h-full  items-center justify-center rounded-md px-1">
+              <button class="bg-blue-500 hover:bg-blue-700 border-none w-full h-full" >
+                 Add user
+              </button>
+          </a>
         </div>
         <div class="p-1 flex">
             <h1 class="text-3xl">Users</h1>
@@ -37,7 +42,7 @@
                     <td>
                       <a routerLink="{{data.id}}" nz-button nzType="primary">Details</a>
                       <nz-divider nzType="vertical"></nz-divider>
-                      <a  nz-button nzType="primary" nzDanger>Delete</a>
+                      <button  nz-button nzType="primary" nzDanger (click)="onDeleteUser(data.id)">Delete</button>
                     </td>
                   </tr>
                 </tbody>

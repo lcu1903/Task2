@@ -5,6 +5,9 @@ export const environment = {
   getAllUsersApiUrl: "https://localhost:7204/api/admins/get-all-user",
   signUpApiUrl: "https://localhost:7204/api/authentications/register",
   signOutApiUrl: "https://localhost:7204/api/authentications/logout",
+  addUserApiUrl: "https://localhost:7204/api/admins/add-user",
+  deleteUserApiUrl: (id: string) =>
+    `https://localhost:7204/api/admins/delete-user/${id}`,
   refreshTokenApiUrl:
     "https://localhost:7204/api/authentications/refresh-token",
   refreshAccessTokenApiUrl:

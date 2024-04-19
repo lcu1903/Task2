@@ -85,13 +85,17 @@ export class LoginComponent {
               var accessToken = res.accessToken;
               var refreshToken = res.refreshToken;
               this.authService.login(accessToken, refreshToken);
-              this.router.navigateByUrl("/dashboard");
+              this.router.navigateByUrl("/dashboard/user");
+              
             } else {
-              console.log("Login Failed ");
+              console.log(
+                "Login Failed",
+                (this.error = "Login failed! Please check email and password"),
+              );
             }
           },
           error: (error) => {
-            console.log("Login Failed ", error);
+            this.error = "Login failed! Please check email and password";
           },
         });
     } else {

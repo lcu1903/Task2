@@ -54,41 +54,43 @@ export class AuthInterceptor implements HttpInterceptor {
     ) as Observable<HttpEvent<any>>;
   }
   private handle401Error(req: HttpRequest<any>, next: HttpHandler) {
-    if (!this.isRefreshing) {
-      this.isRefreshing = true;
-      this.refreshTokenSubject.next(null);
-
-      return this.authService.refreshAccessToken().pipe(
-        switchMap((newToken: string) => {
-          if (newToken) {
+    if (this.authService.checkAuthentication()) {
+      if (!this.isRefreshing) {
+        this.isRefreshing = true;
+        this.refreshTokenSubject.next(null);
+        return this.authService.refreshAccessToken().pipe(
+          switchMap((newToken: string) => {
+            if (newToken) {
+              this.isRefreshing = false;
+              this.refreshTokenSubject.next(newToken);
+              return next.handle(this.addToken(req, newToken));
+            }
+            // If we don't get a new token, we are in trouble so logout.
+            this.authService.logout();
+            this.router.navigateByUrl("/login");
+            return throwError("Session expired");
+          }),
+          catchError((error) => {
+            // If there is an exception calling 'refreshToken', bad news so logout.
+            this.authService.logout();
+            this.router.navigateByUrl("/login");
+            return throwError(error);
+          }),
+          finalize(() => {
             this.isRefreshing = false;
-            this.refreshTokenSubject.next(newToken);
-            return next.handle(this.addToken(req, newToken));
-          }
-          // If we don't get a new token, we are in trouble so logout.
-          this.authService.logout();
-          this.router.navigateByUrl("/login");
-          return throwError("Session expired");
-        }),
-        catchError((error) => {
-          // If there is an exception calling 'refreshToken', bad news so logout.
-          this.authService.logout();
-          this.router.navigateByUrl("/login");
-          return throwError(error);
-        }),
-        finalize(() => {
-          this.isRefreshing = false;
-        }),
-      );
-    } else {
-      return this.refreshTokenSubject.pipe(
-        filter((token) => token != null),
-        take(1),
-        switchMap((jwt) => {
-          return next.handle(this.addToken(req, jwt));
-        }),
-      );
+          }),
+        );
+      } else {
+        return this.refreshTokenSubject.pipe(
+          filter((token) => token != null),
+          take(1),
+          switchMap((jwt) => {
+            return next.handle(this.addToken(req, jwt));
+          }),
+        );
+      }
     }
+    return throwError("Session expired");
   }
   private addToken(req: HttpRequest<any>, token: string) {
     return req.clone({

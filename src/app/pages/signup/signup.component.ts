@@ -84,16 +84,15 @@ export class SignupComponent {
           Role: "User",
         };
       }
-      debugger;
       if (
-        !this.userService.checkUserOrEmailExists(
+        this.userService.checkUserOrEmailExists(
           this.signupObj.Username,
           this.signupObj.Email,
         )
       ) {
         this.http.post(this.apiUrl, this.signupObj).subscribe((res: any) => {
           if (res) {
-            this.router.navigateByUrl("/login");
+            this.router.navigateByUrl("/dashboard/user");
           } else {
             this.error = res.error;
             console.log(this.error);
@@ -102,7 +101,6 @@ export class SignupComponent {
       } else {
         this.error = "Nickname or Email already exists";
       }
-      debugger;
     } else {
       this.error = "Sign up failed! Please check your information";
       Object.values(this.signUpForm.controls).forEach((control) => {
